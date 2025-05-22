@@ -11,6 +11,11 @@ class AppError extends Error {
   }
 }
 
+const notFound = (req, res, next) => {
+  const error = new AppError(`Rota não encontrada - ${req.originalUrl}`, 404);
+  next(error);
+};
+
 const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
@@ -41,13 +46,8 @@ const errorHandler = (err, req, res, next) => {
   }
 };
 
-const notFound = (req, res, next) => {
-  const err = new AppError(`Rota não encontrada - ${req.originalUrl}`, 404);
-  next(err);
-};
-
 module.exports = {
   AppError,
-  errorHandler,
-  notFound
+  notFound,
+  errorHandler
 }; 

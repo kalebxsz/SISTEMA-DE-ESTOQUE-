@@ -16,7 +16,7 @@ Sistema web moderno para gerenciamento de estoque, desenvolvido com tecnologias 
 - Node.js
 - Express
 - Sequelize (ORM)
-- PostgreSQL
+- SQLite (banco de dados local)
 - Dotenv (configuração)
 - CORS
 - Helmet (segurança)
@@ -25,7 +25,6 @@ Sistema web moderno para gerenciamento de estoque, desenvolvido com tecnologias 
 ## 📋 Pré-requisitos
 
 - Node.js (versão 18 ou superior)
-- PostgreSQL (versão 12 ou superior)
 - NPM ou Yarn
 
 ## 🔧 Instalação
@@ -63,10 +62,6 @@ npm install
 3. Configure as variáveis de ambiente:
 Crie um arquivo `.env` na raiz do backend com as seguintes variáveis:
 ```env
-DB_HOST=localhost
-DB_USER=seu_usuario
-DB_PASS=sua_senha
-DB_NAME=nome_do_banco
 PORT=3000
 ```
 
@@ -74,6 +69,8 @@ PORT=3000
 ```bash
 npm run dev
 ```
+
+O banco de dados SQLite será criado automaticamente na primeira execução do servidor.
 
 ## 🏗️ Estrutura do Projeto
 

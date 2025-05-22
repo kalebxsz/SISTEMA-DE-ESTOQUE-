@@ -1,47 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import MainLayout from './components/Layout/MainLayout';
-import LoginForm from './components/Autenticacao/LoginForm';
-import Dashboard from './pages/Dashboard';
-import ProdutosPage from './pages/Produtos';
-import UsuariosPage from './pages/Usuarios';
-import MovimentacoesPage from './pages/Movimentacoes';
-import RelatoriosPage from './pages/Relatorios';
-
-// Componente para rotas protegidas
-const RotaProtegida = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return <>{children}</>;
-};
+import { ProductList } from './components/ProductList';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-                <MainLayout />
-            }
-          >
-            <Route index element={<Dashboard />} />
-            <Route path="produtos" element={<ProdutosPage />} />
-            <Route path="usuarios" element={<UsuariosPage />} />
-            <Route path="movimentacoes" element={<MovimentacoesPage />} />
-            <Route path="relatorios" element={<RelatoriosPage />} />
-          </Route>
-          
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow">
+        <div className="container mx-auto px-4 py-6">
+          <h1 className="text-3xl font-bold text-gray-900">
+            EstoqueJá
+          </h1>
+        </div>
+      </header>
+
+      <main>
+        <ProductList />
+      </main>
+    </div>
   );
 }
 
