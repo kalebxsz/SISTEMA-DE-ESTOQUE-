@@ -20,30 +20,20 @@ const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (config.server.nodeEnv === 'development') {
-    res.status(err.statusCode).json({
+  // Erro operacional conhecido
+  if (err.isOperational) {
+    return res.status(err.statusCode).json({
       status: err.status,
-      error: err,
-      message: err.message,
-      stack: err.stack
+      message: err.message
     });
-  } else {
-    // Erro operacional: enviar mensagem para o cliente
-    if (err.isOperational) {
-      res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message
-      });
-    } 
-    // Erro de programação: enviar mensagem genérica
-    else {
-      console.error('ERROR 💥', err);
-      res.status(500).json({
-        status: 'error',
-        message: 'Algo deu errado!'
-      });
-    }
   }
+
+  // Erro de programação desconhecido
+  console.error('ERROR 💥', err);
+  return res.status(500).json({
+    status: 'error',
+    message: 'Algo deu errado!'
+  });
 };
 
 module.exports = {

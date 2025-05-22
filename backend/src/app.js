@@ -6,7 +6,9 @@ const morgan = require('morgan');
 const sequelize = require('./config/database');
 const seedProducts = require('./config/seedProducts');
 const productRoutes = require('./routes/products');
+const authRoutes = require('./routes/auth');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
+const { protect } = require('./middleware/authMiddleware');
 
 const app = express();
 
@@ -56,7 +58,10 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
+
+// Rotas protegidas
+app.use('/api/products', protect, productRoutes);
 
 // Tratamento de erros
 app.use(notFound);
